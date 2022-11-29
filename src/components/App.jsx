@@ -1,12 +1,22 @@
-import { useSelector } from 'react-redux';
 import AddContactForm from './AddContactForm/AddContactForm';
 import ContactList from './ContactList/ContactList';
 import SearchFilter from './SearchFilter/SearchFilter';
-import { getContacts } from '../redux/contactsSlice';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from '../redux/operations';
+import { selectContacts } from '../redux/selectors';
 import css from './App.module.css';
 
 export function App() {
-  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
+  // const isLoading = useSelector(selectIsLoading);
+  // const error = useSelector(selectError);
+
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   // const [contacts, setContacts] = useState(() => {
   //   return localStorage.getItem('contacts')

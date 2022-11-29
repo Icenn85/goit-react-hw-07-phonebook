@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts, addContactAction } from '../../redux/contactsSlice';
-import { nanoid } from 'nanoid';
+import { selectContacts } from '../../redux/selectors';
+import { addContact } from '../../redux/operations';
 import css from './AddContactForm.module.css';
 
 const AddContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleChange = evt => {
@@ -24,12 +24,8 @@ const AddContactForm = () => {
     }
   };
 
-  const onFormSubmit = ({ name, number }) => {
-    const newContact = {
-      id: nanoid(),
-      name,
-      number,
-    };
+  const handleSubmit = evt => {
+    evt.preventDefault();
 
     const isContact = contacts.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
@@ -40,13 +36,7 @@ const AddContactForm = () => {
       return;
     }
 
-    dispatch(addContactAction(newContact));
-  };
-
-  const handleSubmit = evt => {
-    evt.preventDefault();
-
-    onFormSubmit({ name, number });
+    dispatch(addContact({ name, number }));
 
     reset();
   };
