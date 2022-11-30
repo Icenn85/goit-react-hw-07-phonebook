@@ -26,9 +26,7 @@ export const contactsSlice = createSlice({
         state.items.push(action.payload);
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
-        const index = state.items.findIndex(
-          task => task.id === action.payload.id
-        );
+        const index = state.items.findIndex(task => task.id === action.payload);
         state.items.splice(index, 1);
       })
       .addMatcher(

@@ -74,6 +74,7 @@ export function App() {
       <h1>Phonebook</h1>
       <AddContactForm />
       <h2>Contacts</h2>
+      {contacts.length === 0 && <p>Add your first contact</p>}
       {contacts.length > 0 && <SearchFilter />}
       {contacts.length > 0 && <ContactList />}
     </div>
